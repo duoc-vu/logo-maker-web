@@ -13,25 +13,28 @@ function App() {
   const [selectedIndex, setSelectedIndex] = useState();
   return (
     <>
-      <Header/>
-      <div className='w-64 fixed'>
-        <SideNav selectedIndex={(value)=>{setSelectedIndex(value)}}/>
+      <Header />
+      <div className='fixed w-screen'>
+        <div className='w-64 fixed'>
+          <SideNav selectedIndex={(value) => { setSelectedIndex(value) }} />
+        </div>
+        <div className='ml-64 grid grid-cols-1 md:grid-cols-6 h-screen '>
+          <div className='md:col-span-2 shadow-sm p-5 overflow-auto '>
+            {selectedIndex == 0 ? <IconController /> : <BackgroundController />}
+
+
+          </div>
+          <div className='md:col-span-3 bg-red-100'>
+            Icon Preview
+          </div>
+          <div className='bg-blue-100'>
+            Ads Banner
+          </div>
+        </div>
       </div>
-      <div className='ml-64 grid grid-cols-1 md:grid-cols-6 h-screen fixed'>
-        <div className='md:col-span-2 shadow-sm p-5 overflow-auto'>
-          {selectedIndex==0 ? <BackgroundController/> : <IconController/>}
-            
-            
-        </div>
-        <div className='md:col-span-3 bg-red-100'>
-            Icon Preview 
-        </div>
-        <div className='bg-blue-100'>
-            Ads Banner 
-        </div>
-      </div>
+
     </>
-    
+
   )
 }
 
