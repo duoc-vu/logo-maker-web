@@ -4,13 +4,15 @@ import { Slider } from "@/components/ui/slider"
 import ColorPicker from 'react-best-gradient-color-picker';
 import ColorPickerController from './ColorPickerController';
 import { UpdateStorageContext } from '../context/UpdateStorageContext';
+import IconList from './IconList';
 
 
 function IconController() {
-    const [size,setSize] = useState(280);
-    const [rotate,setRotate] = useState(0);
-    const [color,setColor] = useState('#FFF'); 
     const storageValue = JSON.parse(localStorage.getItem('value'));
+    const [size,setSize] = useState(storageValue?storageValue?.iconSize:280);
+    const [rotate,setRotate] = useState(storageValue?storageValue?.iconRotate:0);
+    const [color,setColor] = useState(storageValue?storageValue?.iconColor:'#FFF'); 
+    const [icon,setIcon] = useState(storageValue?storageValue?.icon:"Smile")
     const {updateStorage,setUpdateStorage} = useContext(UpdateStorageContext)
     useEffect(() =>{
 
@@ -19,25 +21,21 @@ function IconController() {
             iconSize:size,
             iconRotate:rotate,
             iconColor:color,
-            icon:'Smile'
+            icon:icon
         }
         setUpdateStorage(updateValue)
         localStorage.setItem('value' ,JSON.stringify(updateValue));
-    },[size,rotate,color])
+    },[size,rotate,color,icon])
 
     return (
         <div>
             <div>
-                <label>Icon</label>
-                <div className='p-3 my-2 cursor-pointer bg- 
-                    rounded-md w-[50px] h-[50px] flex items-center justify-center'> 
-                    <Smile />
-                </div>
+                <IconList selectedIcon={(icon) => {setIcon(icon)}}/>
                 <div className='py-2'>
                     <label className='p-2 flex justify-between items-center'>Size <span>{size}</span></label>
                     <Slider 
                         className='bg-gray-200'
-                        defaultValue={[280]} max={512} step={1} 
+                        defaultValue={[size]} max={512} step={1} 
                         onValueChange={(event)=>setSize(event[0])}
                     />
                 </div>
@@ -45,7 +43,7 @@ function IconController() {
                     <label className='p-2 flex justify-between items-center'>Rotate  <span>{rotate}°</span></label>
                     <Slider 
                         className='bg-gray-200'
-                        defaultValue={[0]} max={360} step={1} 
+                        defaultValue={[rotate]} max={360} step={1} 
                         onValueChange={(event)=>setRotate(event[0])}
                     />
                 </div>
