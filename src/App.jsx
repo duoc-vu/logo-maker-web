@@ -5,19 +5,23 @@ import './App.css'
 import { Button } from "@/components/ui/button"
 import Header from './components/header'
 import SideNav from './components/SideNav'
+import IconController from './components/IconController'
+import BackgroundController from './components/BackgroundController'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const [selectedIndex, setSelectedIndex] = useState();
   return (
     <>
       <Header/>
-      <div className='w-64 fixed items-start'>
-        <SideNav selectedIndex={(value)=>{console.log(value)}}/>
+      <div className='w-64 fixed'>
+        <SideNav selectedIndex={(value)=>{setSelectedIndex(value)}}/>
       </div>
-      <div className='ml-64 grid grid-cols-1 md:grid-cols-6'>
-        <div className='md:col-span-2 bg-green-200'>
-            Control Panel
+      <div className='ml-64 grid grid-cols-1 md:grid-cols-6 h-screen fixed'>
+        <div className='md:col-span-2 shadow-sm p-5 overflow-auto'>
+          {selectedIndex==0 ? <BackgroundController/> : <IconController/>}
+            
+            
         </div>
         <div className='md:col-span-3 bg-red-100'>
             Icon Preview 
