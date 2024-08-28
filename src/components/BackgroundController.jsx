@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Slider } from "@/components/ui/slider"
 import ColorPickerController from './ColorPickerController';
+import { UpdateStorageContext } from '../context/UpdateStorageContext';
 
 function BackgroundController() {
   const [rounded, setRounded] = useState(0);
   const [padding, setPadding] = useState(0);
   const [color, setColor] = useState('#000');
   const storageValue =JSON.parse( localStorage.getItem('value'))
+  const {updateStorage,setUpdateStorage} = useContext(UpdateStorageContext)
+
   useEffect(() => {
     const updateValue = {
       ...storageValue,
@@ -14,6 +17,7 @@ function BackgroundController() {
       bgPadding: padding,
       bgColor: color
     }
+    setUpdateStorage(updateValue)
 
     localStorage.setItem('value' ,JSON.stringify(updateValue))
   },[rounded,padding,color])
@@ -29,7 +33,7 @@ function BackgroundController() {
         />
       </div>
       <div className='py-2'>
-        <label className='p-2 flex justify-between items-center'>Rounded <span>{padding}</span></label>
+        <label className='p-2 flex justify-between items-center'>Padding <span>{padding}</span></label>
         <Slider
           className='bg-gray-200'
           defaultValue={[40]} max={100} step={1}
