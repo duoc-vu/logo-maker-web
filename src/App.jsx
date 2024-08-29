@@ -26,7 +26,7 @@ function App() {
         </div>
         <div className='ml-64 grid grid-cols-1 md:grid-cols-5 h-screen '>
           <div className='md:col-span-2 shadow-sm p-5 overflow-auto '>
-            {selectedIndex == 0 ? <IconController /> : <BackgroundController />}
+            {selectedIndex == 1 ? <IconController /> : <BackgroundController />}
 
 
           </div>
