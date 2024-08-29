@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 
 function LogoPreview({ downloadIcon }) {
     const [storageValue, setStorageValue] = useState();
+    const BASE_URL = 'https://logoexpress.tubeguruji.com'
     const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
     useEffect(() => {
         const storageData = JSON.parse(localStorage.getItem('value'));
@@ -49,12 +50,22 @@ function LogoPreview({ downloadIcon }) {
                         borderRadius: storageValue?.bgRounded,
                         background: storageValue?.bgColor
                     }}>
-                    <Icon
+                        {storageValue?.icon?.includes('.png')?
+                        <img src={'/png/' + storageValue?.icon } 
+                        style={{
+                            height:storageValue?.iconSize,
+                            width:storageValue?.iconSize,
+
+                        }} 
+                        /> :
+                        <Icon
                         name={storageValue?.icon}
                         color={storageValue?.iconColor}
                         size={storageValue?.iconSize}
                         rotate={storageValue?.iconRotate}
                     />
+                        }
+                    
                 </div>
             </div>
         </div>

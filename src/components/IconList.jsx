@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Dialog,
     DialogContent,
@@ -9,29 +9,55 @@ import {
 } from "@/components/ui/dialog"
 import { icons, Smile } from 'lucide-react'
 import { iconList } from '../constants/icons';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import axios from 'axios';
 
 
-function IconList({selectedIcon}) {
+
+function IconList({ selectedIcon }) {
     const [openDialog, setOpenDialog] = useState(false);
     const storageValue = JSON.parse(localStorage.getItem('value'));
-    const [icon,setIcon] = useState(storageValue?storageValue?.icon:"Smile")
+    const [pngIconList, setPngIconList] = useState([]);
+    const [icon, setIcon] = useState(storageValue ? storageValue?.icon : "Smile")
+    const BASE_URL = 'https://logoexpress.tubeguruji.com'
 
-    const Icon = ({name,color,size })=>{
+    useEffect(() => {
+        getPngIcon();
+    }, [])
+    const Icon = ({ name, color, size }) => {
         const LucidIcon = icons[name];
         if (!LucidIcon) {
             return;
-        } 
+        }
         return <LucidIcon color={color} size={size} />
     }
+
+    const getPngIcon = () => {
+        axios.get(BASE_URL + '/getIcons.php')
+            .then(resp => {
+                console.log("Response data:", resp.data);
+                setPngIconList(resp.data);
+            })
+            .catch(error => {
+                console.error("Error fetching icons:", error);
+            });
+    };
+
+
 
     return (
         <div>
             <div >
                 <label>Icon</label>
-                <div onClick={() => setOpenDialog(true)} 
+                <div onClick={() => setOpenDialog(true)}
                     className='p-3 my-2 cursor-pointer bg-gray-200
                     rounded-md w-[50px] h-[50px] flex items-center justify-center'>
+
+                    {icon?.includes('.png') ? 
+                    <img src={BASE_URL + '/png/' + icon} />:
                     <Icon name={icon} color={'#000'} size={20} />
+                }
+                    
                 </div>
             </div>
             <Dialog open={openDialog}>
@@ -40,20 +66,49 @@ function IconList({selectedIcon}) {
                     <DialogHeader>
                         <DialogTitle>Pick Your Favarite Icon</DialogTitle>
                         <DialogDescription>
-                            <div 
-                                className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5
-                                gap-4 overflow-auto h-[400px] p-6'>
-                                {iconList.map((icon,index) => (
-                                    <div 
-                                    className='border p-3 flex rounded-sm items-center justify-center cursor-pointer'
-                                    onClick={() =>{selectedIcon(icon); setOpenDialog(false);
-                                    setIcon(icon)
-                                    }}
-                                    >
-                                        <Icon name={icon} color={'#000'} size={20}/>
+                            <Tabs defaultValue="icon" className="w-[400px]">
+                                <TabsList>
+                                    <TabsTrigger value="icon">Icon</TabsTrigger>
+                                    <TabsTrigger value="color-icon">Color Icon</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="icon">
+                                    <div
+                                        className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5
+                                        gap-4 overflow-auto h-[400px] p-6'>
+                                        {iconList.map((icon, index) => (
+                                            <div
+                                                className='border p-3 flex rounded-sm items-center justify-center cursor-pointer'
+                                                onClick={() => {
+                                                    selectedIcon(icon); setOpenDialog(false);
+                                                    setIcon(icon)
+                                                }}
+                                            >
+                                                <Icon name={icon} color={'#000'} size={20} />
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
+                                </TabsContent>
+                                <TabsContent value="color-icon">
+                                    <div
+                                        className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5
+                                        gap-4 overflow-auto h-[400px] p-6'>
+                                        {pngIconList.map((icon, index) => (
+                                            <div
+                                                className='border p-3 flex rounded-sm items-center justify-center cursor-pointer'
+                                                onClick={() => {
+                                                    selectedIcon(icon); setOpenDialog(false);
+                                                    setIcon(icon)
+                                                    console.log(icon);
+                                                }}
+                                            >
+                                                <img src={BASE_URL + '/png/' + icon} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </TabsContent>
+                            </Tabs>
+
+
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>
