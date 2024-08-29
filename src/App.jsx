@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { Button } from "@/components/ui/button"
-import Header from './components/header'
+import Header from './components/Header'
 import SideNav from './components/SideNav'
 import IconController from './components/IconController'
 import BackgroundController from './components/BackgroundController'
