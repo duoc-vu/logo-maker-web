@@ -12,7 +12,7 @@ import { UpdateStorageContext } from './context/UpdateStorageContext'
 
 function App() {
   const [count, setCount] = useState(0)
-  const [selectedIndex, setSelectedIndex] = useState();
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [updateStorage, setUpdateStorage] = useState({});
   const [downloadIcon, setDownloadIcon] = useState();
 
@@ -26,9 +26,7 @@ function App() {
         </div>
         <div className='ml-64 grid grid-cols-1 md:grid-cols-5 h-screen '>
           <div className='md:col-span-2 shadow-sm p-5 overflow-auto '>
-            {selectedIndex == 1 ? <IconController /> : <BackgroundController />}
-
-
+            {selectedIndex == 0 ? <IconController /> : <BackgroundController />}
           </div>
           <div className='md:col-span-3 flex justify-center items-center'>
             <LogoPreview downloadIcon={downloadIcon}/>
