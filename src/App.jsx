@@ -34,7 +34,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className='bg-gray-200 border-2 text-xl flex justify-center h-[50px] w-full items-center'>By Duoc Vu</div>
+          <div className='bg-gray-200 border-2 text-border text-md flex justify-center h-[50px] w-full items-center'>BY DUOC VU</div>
         </div>
       </UpdateStorageContext.Provider>
     </>
