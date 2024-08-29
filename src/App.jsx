@@ -18,21 +18,24 @@ function App() {
 
   return (
     <>
-    <UpdateStorageContext.Provider value={{updateStorage,setUpdateStorage}}>
-      <Header DownloadIcon={setDownloadIcon}/>
-      <div className='fixed w-screen'>
-        <div className='w-64 fixed'>
-          <SideNav selectedIndex={(value) => { setSelectedIndex(value) }} />
-        </div>
-        <div className='ml-64 grid grid-cols-1 md:grid-cols-5 h-screen '>
-          <div className='md:col-span-2 shadow-sm p-5 overflow-auto '>
-            {selectedIndex == 0 ? <IconController /> : <BackgroundController />}
+      <UpdateStorageContext.Provider value={{ updateStorage, setUpdateStorage }}>
+        <div className=''>
+          <Header DownloadIcon={setDownloadIcon} />
+          <div className='flex'>
+            <div className='w-60'>
+              <SideNav selectedIndex={(value) => { setSelectedIndex(value) }} />
+            </div>
+            <div className=' grid grid-cols-1 md:grid-cols-5 h-screen w-screen'>
+              <div className='md:col-span-2 shadow-sm p-5 overflow-auto '>
+                {selectedIndex == 0 ? <IconController /> : <BackgroundController />}
+              </div>
+              <div className='md:col-span-3 flex justify-center items-center w-full'>
+                <LogoPreview downloadIcon={downloadIcon} />
+              </div>
+            </div>
           </div>
-          <div className='md:col-span-3 flex justify-center items-center'>
-            <LogoPreview downloadIcon={downloadIcon}/>
-          </div>
+          <div className='bg-gray-200 border-2 text-xl flex justify-center h-[50px] w-full items-center'>By Duoc Vu</div>
         </div>
-      </div>
       </UpdateStorageContext.Provider>
     </>
 
