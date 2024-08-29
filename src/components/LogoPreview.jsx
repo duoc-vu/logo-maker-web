@@ -51,7 +51,7 @@ function LogoPreview({ downloadIcon }) {
                         background: storageValue?.bgColor
                     }}>
                         {storageValue?.icon?.includes('.png')?
-                        <img src={BASE_URL + '/png/' + storageValue?.icon } 
+                        <img src={'/png/' + storageValue?.icon } 
                         style={{
                             height:storageValue?.iconSize,
                             width:storageValue?.iconSize,
